@@ -1,7 +1,15 @@
+import "@/index.css";
+
 import { createRoot } from "react-dom/client";
-import "./index.css";
 import { BrowserRouter, Routes, Route } from "react-router";
-import { AboutUs, Create, DashboardLayout, Gallery, Queue } from "@/views";
+import {
+  AboutUs,
+  Create,
+  DashboardLayout,
+  Gallery,
+  Queue,
+  XRPlayground,
+} from "@/views";
 
 const root = document.getElementById("root") as HTMLElement;
 
@@ -14,7 +22,7 @@ createRoot(root).render(
         <Route path="/queue" element={<Queue />} />
         <Route path="/create" element={<Create />} />
       </Route>
-      <Route path="/vr/:id" element={<Gallery />} />
+      <Route path="/xr-playground/:id" element={<XRPlayground />} />
     </Routes>
   </BrowserRouter>,
 );

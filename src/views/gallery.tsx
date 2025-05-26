@@ -15,7 +15,7 @@ function Gallery() {
               VR Gallery
             </h2>
             <p className="text-muted-foreground text-sm">
-              Curated list of VR experiences.
+              Curated list of VR experiences from our team.
             </p>
           </div>
           <Link to="/create" className="block">

@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 import src from "@/assets/pano.jpeg";
 import { RectangleGoggles } from "lucide-react";
+import { Link } from "react-router";
 
 type Props = {
   src?: string;
@@ -9,10 +10,10 @@ type Props = {
   subtitle: string;
 } & Partial<HTMLDivElement>;
 
-export default function XRCard({ className, subtitle, title }: Props) {
+export default function XRCard({ className, id, subtitle, title }: Props) {
   return (
-    <figure className={cn(className, "relative flex flex-col")}>
-      <div className="absolute top-4 left-4 flex items-center justify-center space-x-2 rounded-full bg-black/20 px-3 py-1.5 text-white shadow-lg backdrop-blur-xl select-none">
+    <figure className={cn(className, "relative isolate flex flex-col")}>
+      <div className="absolute top-4 left-4 z-10 flex items-center justify-center space-x-2 rounded-full bg-black/20 px-3 py-1.5 text-white shadow-lg backdrop-blur-xl select-none">
         <RectangleGoggles
           className="size-3"
           strokeWidth="2"
@@ -21,7 +22,14 @@ export default function XRCard({ className, subtitle, title }: Props) {
         />
         <span className="text-xs font-medium opacity-85">VR Compatible</span>
       </div>
-      <img src={src} className="w-full grow rounded object-cover" />
+      <div className="group relative w-full grow cursor-pointer overflow-hidden rounded bg-white">
+        <Link to={`/xr-playground/${id}`}>
+          <img
+            src={src}
+            className="absolute inset-0 size-full object-cover transition-transform duration-300 group-hover:scale-104"
+          />
+        </Link>
+      </div>
       {/* Metadata */}
       <figcaption className="h-24 shrink-0 space-y-2 px-2 pt-4 text-sm">
         <h3 className="leading-none font-semibold">{title}</h3>
