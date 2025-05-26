@@ -1,10 +1,20 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App'
-import './index.css'
+import { createRoot } from "react-dom/client";
+import "./index.css";
+import { BrowserRouter, Routes, Route } from "react-router";
+import App from "./App.tsx";
+import DashboardLayout from "./views/dashboard-layout.tsx";
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-)
+const root = document.getElementById("root") as HTMLElement;
+
+createRoot(root).render(
+  <BrowserRouter>
+    <Routes>
+      <Route element={<DashboardLayout />}>
+        <Route index path="/" element={<App />} />
+        <Route path="/queue" element={<App />} />
+        <Route path="/create" element={<App />} />
+      </Route>
+      <Route path="/vr/:id" element={<App />} />
+    </Routes>
+  </BrowserRouter>,
+);

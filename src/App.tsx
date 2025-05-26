@@ -1,7 +1,5 @@
-import "./App.css";
-
 function App() {
-  return <div className="App">Living Paintings</div>;
+  return <div className="dark bg-background h-screen w-full"></div>;
 }
 
 export default App;
