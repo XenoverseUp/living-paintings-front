@@ -1,9 +1,8 @@
 import { cn } from "@/lib/utils";
 
 import { Button } from "@/components/ui/button";
-import { RectangleGoggles } from "lucide-react";
 import { NavLink } from "react-router";
-import { Link } from "react-router";
+import { Separator } from "./ui/separator";
 
 type SidebarProps = Partial<HTMLDivElement>;
 
@@ -98,18 +97,11 @@ export function Sidebar({ className }: SidebarProps) {
             </NavLink>
           </div>
         </div>
-        <div className="mt-auto px-3">
-          <Link to="/create" className="block">
-            <Button variant="default" className="w-full justify-center">
-              <RectangleGoggles
-                className="size-4"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              Create VR
-            </Button>
-          </Link>
+        <div className="mt-auto">
+          <Separator className="mb-4" />
+          <p className="text-muted-foreground px-6 text-xs">
+            Living Paintings &copy; {new Date().getFullYear()}
+          </p>
         </div>
       </div>
     </div>
