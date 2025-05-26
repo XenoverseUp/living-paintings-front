@@ -1,48 +1,56 @@
 import * as THREE from "three";
 import { Canvas, useLoader } from "@react-three/fiber";
 
-import defaultPanoSrc from "@/assets/curated/accolade/pano.jpg";
-import defaultDepthSrc from "@/assets/curated/accolade/depth.jpg";
 import EnableXR from "@/components/enable-xr";
 import { useParams } from "react-router";
 import useQuery from "@/lib/hooks/useQuery";
 import { Suspense, useEffect, useState } from "react";
+import { RectangleGoggles } from "lucide-react";
 
 function XRPlayground() {
   const { id } = useParams();
   const query = useQuery();
 
-  const [panoSrc, setPanoSrc] = useState<string>(defaultPanoSrc);
-  const [depthSrc, setDepthSrc] = useState<string>(defaultDepthSrc);
+  const [panoPath, setPanoPath] = useState<string | null>(null);
+  const [depthPath, setDepthPath] = useState<string | null>(null);
 
   useEffect(() => {
     if (query.get("local") === "true" && id) {
       import(`@/assets/curated/${id}/pano.jpg`).then((mod) =>
-        setPanoSrc(mod.default),
+        setPanoPath(mod.default),
       );
-
       import(`@/assets/curated/${id}/depth.jpg`).then((mod) =>
-        setDepthSrc(mod.default),
+        setDepthPath(mod.default),
       );
     }
   }, [id, query]);
 
-  const [panorama, depthMap] = useLoader(THREE.TextureLoader, [
-    panoSrc,
-    depthSrc,
-  ]);
+  const isReady = panoPath && depthPath;
 
   return (
-    <div className="relative isolate h-screen w-full overflow-hidden bg-black">
-      <Canvas camera={{ position: [0, 0, 0] }}>
-        <Suspense fallback={null}>
+    <div className="relative isolate flex h-screen w-full items-center justify-center overflow-hidden bg-black">
+      <Suspense
+        fallback={
+          <div className="flex w-fit flex-col items-center gap-4 text-white">
+            <RectangleGoggles
+              className="size-16"
+              strokeWidth="1"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <h1 className="animate-pulse text-lg font-light">
+              Loading the VR Experience...
+            </h1>
+          </div>
+        }
+      >
+        <Canvas camera={{ position: [0, 0, 0] }}>
           <EnableXR />
 
-          {/* Lights and scene */}
           <Lights />
-          <Panorama panorama={panorama} depthMap={depthMap} />
-        </Suspense>
-      </Canvas>
+          {isReady && <Panorama panoSrc={panoPath} depthSrc={depthPath} />}
+        </Canvas>
+      </Suspense>
     </div>
   );
 }
@@ -67,12 +75,16 @@ function Lights() {
 }
 
 function Panorama({
-  panorama,
-  depthMap,
+  panoSrc,
+  depthSrc,
 }: {
-  panorama: THREE.Texture;
-  depthMap: THREE.Texture;
+  panoSrc: string;
+  depthSrc: string;
 }) {
+  const [panorama, depthMap] = useLoader(THREE.TextureLoader, [
+    panoSrc,
+    depthSrc,
+  ]);
   return (
     <mesh scale={[-1, 1, 1]} rotation={[0, -Math.PI / 2, 0]}>
       <sphereGeometry args={[500, 200, 100]} />
