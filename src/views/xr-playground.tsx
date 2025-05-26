@@ -85,8 +85,12 @@ function Panorama({
     depthSrc,
   ]);
   return (
-    <mesh scale={[-1, 1, 1]} rotation={[0, -Math.PI / 2, 0]}>
-      <sphereGeometry args={[6, 512, 512]} />
+    <mesh
+      scale={[-1, 1, 1]}
+      position={[0, 2, 0]}
+      rotation={[0, -Math.PI / 2, 0]}
+    >
+      <sphereGeometry args={[6, 1024, 1024]} />
       <meshStandardMaterial
         map={panorama}
         displacementMap={depthMap}
