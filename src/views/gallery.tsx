@@ -5,6 +5,8 @@ import XRCard from "@/components/xr-card";
 import { RectangleGoggles } from "lucide-react";
 import { Link } from "react-router";
 
+import src from "@/assets/pano.jpeg";
+
 function Gallery() {
   return (
     <div className="flex h-full w-full flex-col">
@@ -40,42 +42,49 @@ function Gallery() {
               id="3232"
               title="Mountain Goat"
               subtitle="Experience some fresh mountain air, along with some delicate goat poop."
+              preview={src}
             />
             <XRCard
               className="h-full w-84"
               id="3232"
               title="Goat"
               subtitle="Experience some fresh mountain air, along with some delicate goat poop."
+              preview={src}
             />
             <XRCard
               className="h-full w-84"
               id="3232"
               title="Mountain "
               subtitle="Experience some fresh mountain air, along with some delicate goat poop."
+              preview={src}
             />
             <XRCard
               className="h-full w-84"
               id="3232"
               title="Mountain Goat"
               subtitle="Experience some fresh mountain air, along with some delicate goat poop."
+              preview={src}
             />
             <XRCard
               className="h-full w-84"
               id="3232"
               title="Mountain Goat"
               subtitle="Experience some fresh mountain air, along with some delicate goat poop."
+              preview={src}
             />
             <XRCard
               className="h-full w-84"
               id="3232"
               title="Mountain Goat"
               subtitle="Experience some fresh mountain air, along with some delicate goat poop."
+              preview={src}
             />
             <XRCard
               className="h-full w-84"
               id="3232"
               title="Mountain Goat"
               subtitle="Experience some fresh mountain air, along with some delicate goat poop."
+              preview={src}
             />
           </div>
           <ScrollBar orientation="horizontal" />
