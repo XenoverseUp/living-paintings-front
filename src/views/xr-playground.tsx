@@ -7,7 +7,6 @@ import EnableXR from "@/components/enable-xr";
 import { useParams } from "react-router";
 import useQuery from "@/lib/hooks/useQuery";
 import { Suspense, useEffect, useState } from "react";
-import AdjustCamera from "@/components/adjust-camera";
 
 function XRPlayground() {
   const { id } = useParams();
