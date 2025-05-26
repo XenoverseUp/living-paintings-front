@@ -46,7 +46,6 @@ function XRPlayground() {
       >
         <Canvas camera={{ position: [0, 0, 0] }}>
           <EnableXR />
-
           <Lights />
           {isReady && <Panorama panoSrc={panoPath} depthSrc={depthPath} />}
         </Canvas>
@@ -87,15 +86,15 @@ function Panorama({
   ]);
   return (
     <mesh scale={[-1, 1, 1]} rotation={[0, -Math.PI / 2, 0]}>
-      <sphereGeometry args={[500, 200, 100]} />
+      <sphereGeometry args={[6, 512, 512]} />
       <meshStandardMaterial
         map={panorama}
         displacementMap={depthMap}
-        displacementScale={200}
-        displacementBias={-50}
+        displacementScale={4}
+        displacementBias={-2}
         side={THREE.BackSide}
         metalness={0}
-        roughness={1}
+        roughness={0.6}
         dithering={true}
       />
     </mesh>
