@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useThree } from "@react-three/fiber";
-import * as THREE from "three";
+
 import { XRButton } from "three/examples/jsm/webxr/XRButton.js";
 
 export default function EnableXR() {
