@@ -8,6 +8,7 @@ type Props = {
   id: string;
   title: string;
   subtitle: string;
+  local?: boolean;
 } & Partial<HTMLDivElement>;
 
 export default function XRCard({
@@ -16,10 +17,11 @@ export default function XRCard({
   id,
   subtitle,
   title,
+  local = false,
 }: Props) {
   return (
     <figure className={cn(className, "relative isolate flex flex-col")}>
-      <div className="absolute top-4 left-4 z-10 flex items-center justify-center space-x-2 rounded-full bg-black/20 px-3 py-1.5 text-white shadow-lg backdrop-blur-xl select-none">
+      <div className="absolute top-4 left-4 z-10 flex items-center justify-center space-x-2 rounded-full border border-white/10 bg-black/20 px-3 py-1.5 text-white shadow-lg backdrop-blur-xl select-none">
         <RectangleGoggles
           className="size-3"
           strokeWidth="2"
@@ -29,7 +31,7 @@ export default function XRCard({
         <span className="text-xs font-medium opacity-85">VR Compatible</span>
       </div>
       <div className="group relative w-full grow cursor-pointer overflow-hidden rounded bg-white">
-        <Link to={`/xr-playground/${id}`}>
+        <Link to={`/xr-playground/${id}?local=${local}`}>
           <img
             src={preview}
             className="absolute inset-0 size-full object-cover transition-transform duration-300 group-hover:scale-104"
