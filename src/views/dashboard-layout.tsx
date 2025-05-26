@@ -3,10 +3,12 @@ import { Outlet } from "react-router";
 
 export default function DashboardLayout() {
   return (
-    <main className="flex items-stretch">
-      <Sidebar className="shrink-0 w-64" />
+    <main className="text-foreground bg-background flex items-stretch">
+      <Sidebar className="w-64 shrink-0" />
 
-      <Outlet />
+      <section className="bg-accent h-screen grow overflow-y-auto">
+        <Outlet />
+      </section>
     </main>
   );
 }

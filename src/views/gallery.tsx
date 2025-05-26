@@ -1,5 +1,9 @@
 function Gallery() {
-  return <div className=" grow bg-accent h-screen "></div>;
+  return (
+    <div className="w-full">
+      <h1>Gallery</h1>
+    </div>
+  );
 }
 
 export default Gallery;

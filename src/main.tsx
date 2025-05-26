@@ -1,8 +1,7 @@
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import { BrowserRouter, Routes, Route } from "react-router";
-import Gallery from "./views/gallery.tsx";
-import DashboardLayout from "./views/dashboard-layout.tsx";
+import { AboutUs, Create, DashboardLayout, Gallery, Queue } from "@/views";
 
 const root = document.getElementById("root") as HTMLElement;
 
@@ -11,8 +10,9 @@ createRoot(root).render(
     <Routes>
       <Route element={<DashboardLayout />}>
         <Route index path="/" element={<Gallery />} />
-        <Route path="/queue" element={<Gallery />} />
-        <Route path="/create" element={<Gallery />} />
+        <Route path="/about-us" element={<AboutUs />} />
+        <Route path="/queue" element={<Queue />} />
+        <Route path="/create" element={<Create />} />
       </Route>
       <Route path="/vr/:id" element={<Gallery />} />
     </Routes>
