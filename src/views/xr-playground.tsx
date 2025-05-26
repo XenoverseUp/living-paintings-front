@@ -1,22 +1,48 @@
 import * as THREE from "three";
 import { Canvas, useLoader } from "@react-three/fiber";
 
-import panoSrc from "@/assets/pano.jpeg";
-import depthSrc from "@/assets/depth.jpeg";
+import defaultPanoSrc from "@/assets/curated/accolade/pano.jpg";
+import defaultDepthSrc from "@/assets/curated/accolade/depth.jpg";
 import EnableXR from "@/components/enable-xr";
+import { useParams } from "react-router";
+import useQuery from "@/lib/hooks/useQuery";
+import { Suspense, useEffect, useState } from "react";
+import AdjustCamera from "@/components/adjust-camera";
 
 function XRPlayground() {
-  const panorama = useLoader(THREE.TextureLoader, panoSrc);
-  const depthMap = useLoader(THREE.TextureLoader, depthSrc);
+  const { id } = useParams();
+  const query = useQuery();
+
+  const [panoSrc, setPanoSrc] = useState<string>(defaultPanoSrc);
+  const [depthSrc, setDepthSrc] = useState<string>(defaultDepthSrc);
+
+  useEffect(() => {
+    if (query.get("local") === "true" && id) {
+      import(`@/assets/curated/${id}/pano.jpg`).then((mod) =>
+        setPanoSrc(mod.default),
+      );
+
+      import(`@/assets/curated/${id}/depth.jpg`).then((mod) =>
+        setDepthSrc(mod.default),
+      );
+    }
+  }, [id, query]);
+
+  const [panorama, depthMap] = useLoader(THREE.TextureLoader, [
+    panoSrc,
+    depthSrc,
+  ]);
 
   return (
-    <div className="bg-background relative isolate h-screen w-full overflow-hidden">
+    <div className="relative isolate h-screen w-full overflow-hidden bg-black">
       <Canvas camera={{ position: [0, 0, 0] }}>
-        <EnableXR />
+        <Suspense fallback={null}>
+          <EnableXR />
 
-        {/* Lights and scene */}
-        <Lights />
-        <Panorama panorama={panorama} depthMap={depthMap} />
+          {/* Lights and scene */}
+          <Lights />
+          <Panorama panorama={panorama} depthMap={depthMap} />
+        </Suspense>
       </Canvas>
     </div>
   );
@@ -49,19 +75,16 @@ function Panorama({
   depthMap: THREE.Texture;
 }) {
   return (
-    <mesh>
-      <sphereGeometry args={[25, 200, 100]} />
+    <mesh scale={[-1, 1, 1]} rotation={[0, -Math.PI / 2, 0]}>
+      <sphereGeometry args={[500, 200, 100]} />
       <meshStandardMaterial
         map={panorama}
         displacementMap={depthMap}
-        displacementScale={400}
-        displacementBias={-25}
+        displacementScale={200}
+        displacementBias={-50}
+        side={THREE.BackSide}
         metalness={0}
         roughness={1}
-        side={THREE.BackSide}
-        alphaTest={0.1}
-        opacity={1}
-        transparent={true}
         dithering={true}
       />
     </mesh>

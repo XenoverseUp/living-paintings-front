@@ -15,7 +15,7 @@ export function Sidebar({ className }: SidebarProps) {
             Discover
           </h2>
           <div className="space-y-1">
-            <NavLink to="/" className="block">
+            <NavLink viewTransition to="/" className="block">
               {({ isActive }) => (
                 <Button
                   variant={isActive ? "secondary" : "ghost"}
@@ -40,7 +40,7 @@ export function Sidebar({ className }: SidebarProps) {
                 </Button>
               )}
             </NavLink>
-            <NavLink to="/about-us" className="block">
+            <NavLink viewTransition to="/about-us" className="block">
               {({ isActive }) => (
                 <Button
                   variant={isActive ? "secondary" : "ghost"}
@@ -70,7 +70,7 @@ export function Sidebar({ className }: SidebarProps) {
             For You
           </h2>
           <div className="space-y-1">
-            <NavLink to="/queue" className="block">
+            <NavLink viewTransition to="/queue" className="block">
               {({ isActive }) => (
                 <Button
                   variant={isActive ? "secondary" : "ghost"}

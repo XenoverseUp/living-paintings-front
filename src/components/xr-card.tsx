@@ -31,7 +31,7 @@ export default function XRCard({
         <span className="text-xs font-medium opacity-85">VR Compatible</span>
       </div>
       <div className="group relative w-full grow cursor-pointer overflow-hidden rounded bg-white">
-        <Link to={`/xr-playground/${id}?local=${local}`}>
+        <Link to={`/xr-playground/${id}?local=${local}`} viewTransition>
           <img
             src={preview}
             className="absolute inset-0 size-full object-cover transition-transform duration-300 group-hover:scale-104"

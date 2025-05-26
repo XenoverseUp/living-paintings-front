@@ -124,6 +124,7 @@ function Gallery() {
           <div className="flex h-full w-max gap-4 px-8">
             {curated.map(({ id, preview, subtitle, title }) => (
               <XRCard
+                key={`xr-card-${id}`}
                 className="h-full w-84"
                 local
                 id={id}
