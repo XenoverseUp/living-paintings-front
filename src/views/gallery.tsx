@@ -1,9 +1,10 @@
-import { Button } from "@/components/ui/button";
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { Separator } from "@/components/ui/separator";
-import XRCard from "@/components/xr-card";
 import { RectangleGoggles } from "lucide-react";
 import { Link } from "react-router";
+
+import { Button } from "@/components/ui/button";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import Header from "@/components/ui/header";
+import XRCard from "@/components/xr-card";
 
 import accolade from "@/assets/curated/accolade/input.jpg";
 import achilles from "@/assets/curated/achilles/input.jpg";
@@ -95,16 +96,10 @@ const curated = [
 function Gallery() {
   return (
     <div className="flex h-full w-full flex-col">
-      <header className="shrink-0 px-8 pt-6">
-        <div className="flex items-center justify-between">
-          <div className="space-y-1">
-            <h2 className="text-2xl font-semibold tracking-tight">
-              VR Gallery
-            </h2>
-            <p className="text-muted-foreground text-sm">
-              Curated list of VR experiences from our team.
-            </p>
-          </div>
+      <Header
+        title="VR Gallery"
+        subtitle="Curated list of VR experiences from our team."
+        actions={
           <Link to="/create" className="block">
             <Button variant="default">
               <RectangleGoggles
@@ -116,9 +111,8 @@ function Gallery() {
               Create VR
             </Button>
           </Link>
-        </div>
-        <Separator className="my-4" />
-      </header>
+        }
+      />
       <div className="relative grow">
         <ScrollArea className="size-full" type="scroll">
           <div className="flex h-full w-max gap-4 px-8">

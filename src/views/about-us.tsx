@@ -1,7 +1,12 @@
+import Header from "@/components/ui/header";
+
 function AboutUs() {
   return (
-    <div className="w-full">
-      <h1>About Us</h1>
+    <div className="flex h-full w-full flex-col">
+      <Header
+        title="About Us"
+        subtitle="Curated list of VR experiences from our team."
+      />
     </div>
   );
 }
