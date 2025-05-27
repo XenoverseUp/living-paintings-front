@@ -5,7 +5,7 @@ function AboutUs() {
     <div className="flex h-full w-full flex-col">
       <Header
         title="About Us"
-        subtitle="Curated list of VR experiences from our team."
+        subtitle="Get to know more about our dream team."
       />
     </div>
   );

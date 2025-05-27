@@ -114,7 +114,7 @@ function Gallery() {
         }
       />
       <div className="relative grow">
-        <ScrollArea className="size-full" type="scroll">
+        <ScrollArea className="size-full" type="hover">
           <div className="flex h-full w-max gap-4 px-8">
             {curated.map(({ id, preview, subtitle, title }) => (
               <XRCard
@@ -128,6 +128,7 @@ function Gallery() {
               />
             ))}
           </div>
+
           <ScrollBar orientation="horizontal" />
         </ScrollArea>
       </div>

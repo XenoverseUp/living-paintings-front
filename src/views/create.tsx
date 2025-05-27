@@ -11,11 +11,12 @@ import Header from "@/components/ui/header";
 import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Slider } from "@/components/ui/slider";
-import { House, TentTree } from "lucide-react";
+import { House, ImagePlus, ImageUpscale, TentTree } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
+import { createJob } from "@/lib/services";
 
 const formSchema = z.object({
   frame: z.instanceof(FileList),
@@ -36,13 +37,26 @@ function Create() {
       atmosphere: 80,
       sky: 100,
       ground: 100,
+      in_out: "indoor",
     },
   });
 
   const frameRef = form.register("frame");
 
-  const onSubmit = (data: z.infer<typeof formSchema>) => {
+  const onSubmit = async (data: z.infer<typeof formSchema>) => {
     console.log(data);
+
+    const { atmosphere, fov, frame, ground, guidance_scale, in_out, sky } =
+      data;
+
+    const res = await createJob({
+      atmosphere,
+      fov,
+      ground,
+      guidance_scale,
+      in_out,
+      sky,
+    });
   };
 
   return (
@@ -50,11 +64,12 @@ function Create() {
       <Header
         title="Generate VR"
         subtitle="This is how you create a VR experience from a single image."
+        icon={ImageUpscale}
       />
 
       <Form {...form}>
         <form
-          className="space-y-8 px-8 pb-6"
+          className="space-y-8 px-8 pb-12"
           onSubmit={form.handleSubmit(onSubmit)}
         >
           <FormField
@@ -62,7 +77,10 @@ function Create() {
             name="frame"
             render={() => (
               <FormItem>
-                <FormLabel>Frame</FormLabel>
+                <FormLabel>
+                  <ImagePlus className="size-4" />
+                  Frame
+                </FormLabel>
                 <FormControl>
                   <Input
                     type="file"
@@ -99,7 +117,7 @@ function Create() {
                         <RadioGroupItem value="indoor" className="sr-only" />
                       </FormControl>
 
-                      <div className="border-muted hover:border-accent flex h-full w-full items-center justify-center gap-4 rounded-md border-2 px-3 py-1">
+                      <div className="border-muted hover:border-accent flex h-full w-full items-center justify-center gap-4 rounded-md border-2 px-3 py-1 transition">
                         <House />
                         <span>Indoor</span>
                       </div>
@@ -110,7 +128,7 @@ function Create() {
                       <FormControl>
                         <RadioGroupItem value="outdoor" className="sr-only" />
                       </FormControl>
-                      <div className="border-muted hover:border-accent flex h-full w-full items-center justify-center gap-4 rounded-md border-2 px-3 py-1">
+                      <div className="border-muted hover:border-accent flex h-full w-full items-center justify-center gap-4 rounded-md border-2 px-3 py-1 transition">
                         <TentTree />
                         <span>Outdoor</span>
                       </div>
@@ -134,7 +152,8 @@ function Create() {
                   />
                 </FormControl>
                 <FormDescription>
-                  The guidance scale of the generation.
+                  The FOV of the generation. This defines how much the initial
+                  frame captures in the output panorama.
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -154,7 +173,7 @@ function Create() {
                     onChange={(v) => onChange(Number(v.target.value))}
                     min={3.0}
                     max={9.0}
-                    step={0.1}
+                    step={0.25}
                   />
                 </FormControl>
                 <FormDescription>
@@ -181,7 +200,7 @@ function Create() {
                   />
                 </FormControl>
                 <FormDescription>
-                  The guidance scale of the generation.
+                  The atmosphere angle of the generation.
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -202,7 +221,7 @@ function Create() {
                   />
                 </FormControl>
                 <FormDescription>
-                  The guidance scale of the generation.
+                  The sky angle of the generation.
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -223,14 +242,16 @@ function Create() {
                   />
                 </FormControl>
                 <FormDescription>
-                  The guidance scale of the generation.
+                  The ground angle of the generation.
                 </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
           />
 
-          <Button type="submit">Submit</Button>
+          <Button type="submit" className="w-full">
+            Generate
+          </Button>
         </form>
       </Form>
     </div>
