@@ -14,12 +14,12 @@ function XRPlayground() {
 
   const [panoPath, setPanoPath] = useState<string | null>(null);
   const [depthPath, setDepthPath] = useState<string | null>(null);
-  // const [audioPath, setAudioPath] = useState<string | null>(null);
+  const [audioPath, setAudioPath] = useState<string | null>(null);
 
   const [isReady, setIsReady] = useState({
     pano: false,
     depth: false,
-    // audio: false,
+    audio: false,
   });
 
   useEffect(() => {
@@ -32,17 +32,17 @@ function XRPlayground() {
 
       setPanoPath(`${basePath}/pano.jpg`);
       setDepthPath(`${basePath}/depth.jpg`);
-      // setAudioPath(`${basePath}/soundscape.mp3`);
+      setAudioPath(`${basePath}/soundscape.mp3`);
     } else {
       setPanoPath(`${import.meta.env.VITE_BACKEND_HOST}/pano/${id}`);
       setDepthPath(`${import.meta.env.VITE_BACKEND_HOST}/depth/${id}`);
-      // setAudioPath(`${import.meta.env.VITE_BACKEND_HOST}/soundscape/${id}`);
+      setAudioPath(`${import.meta.env.VITE_BACKEND_HOST}/soundscape/${id}`);
     }
 
     setIsReady({
       pano: true,
       depth: true,
-      // audio: true,
+      audio: true,
     });
   }, [id, query]);
 
@@ -77,7 +77,7 @@ function XRPlayground() {
             <Panorama
               panoSrc={panoPath!}
               depthSrc={depthPath!}
-              // audioSrc={audioPath}
+              audioSrc={audioPath}
             />
           )}
         </Canvas>
@@ -89,39 +89,39 @@ function XRPlayground() {
 function Panorama({
   panoSrc,
   depthSrc,
-  // audioSrc,
+  audioSrc,
 }: {
   panoSrc: string;
   depthSrc: string;
-  // audioSrc: string | null;
+  audioSrc: string | null;
 }) {
   const [panorama, depthMap] = useLoader(THREE.TextureLoader, [
     panoSrc,
     depthSrc,
   ]);
 
-  // const { camera } = useThree();
+  const { camera } = useThree();
 
-  // // eslint-disable-next-line
-  // const audioBuffer = audioSrc ? useLoader(THREE.AudioLoader, audioSrc) : null;
+  // eslint-disable-next-line
+  const audioBuffer = audioSrc ? useLoader(THREE.AudioLoader, audioSrc) : null;
 
-  // useEffect(() => {
-  //   if (!audioBuffer) return;
+  useEffect(() => {
+    if (!audioBuffer) return;
 
-  //   const listener = new THREE.AudioListener();
-  //   camera.add(listener);
+    const listener = new THREE.AudioListener();
+    camera.add(listener);
 
-  //   const sound = new THREE.Audio(listener);
-  //   sound.setBuffer(audioBuffer);
-  //   sound.setLoop(true);
-  //   sound.setVolume(0.5);
-  //   sound.play();
+    const sound = new THREE.Audio(listener);
+    sound.setBuffer(audioBuffer);
+    sound.setLoop(true);
+    sound.setVolume(0.5);
+    sound.play();
 
-  //   return () => {
-  //     sound.stop();
-  //     camera.remove(listener);
-  //   };
-  // }, [camera, audioBuffer]);
+    return () => {
+      sound.stop();
+      camera.remove(listener);
+    };
+  }, [camera, audioBuffer]);
 
   return (
     <mesh
@@ -129,7 +129,7 @@ function Panorama({
       position={[0, 2, 0]}
       rotation={[0, -Math.PI / 2, 0]}
     >
-      <sphereGeometry args={[6, 512, 512]} />
+      <sphereGeometry args={[6, 1024, 1024]} />
       <meshStandardMaterial
         map={panorama}
         displacementMap={depthMap}
