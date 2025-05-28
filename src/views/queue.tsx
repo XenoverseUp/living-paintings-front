@@ -2,7 +2,6 @@ import EmptyQueue from "@/components/empty-queue";
 import ProcessingQueue from "@/components/processing-queue";
 import Header from "@/components/ui/header";
 import { Library } from "lucide-react";
-import { useState } from "react";
 
 function Queue() {
   return (

@@ -1,15 +1,20 @@
 import { cn } from "@/lib/utils";
 
 import { Button } from "@/components/ui/button";
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
 import { Separator } from "./ui/separator";
-import { GalleryHorizontal, Library } from "lucide-react";
+import {
+  GalleryHorizontal,
+  Library,
+  RectangleGoggles,
+  Users,
+} from "lucide-react";
 
 type SidebarProps = Partial<HTMLDivElement>;
 
 export function Sidebar({ className }: SidebarProps) {
   return (
-    <div className={cn(className)}>
+    <div className={cn(className, "border-r")}>
       <div className="flex h-full flex-col gap-y-6 pt-6 pb-4">
         <div className="px-3">
           <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight">
@@ -33,19 +38,7 @@ export function Sidebar({ className }: SidebarProps) {
                   variant={isActive ? "secondary" : "ghost"}
                   className="w-full justify-start"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="mr-2 h-4 w-4"
-                  >
-                    <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
-                    <circle cx="12" cy="7" r="4" />
-                  </svg>
+                  <Users />
                   About Us
                 </Button>
               )}
@@ -71,6 +64,14 @@ export function Sidebar({ className }: SidebarProps) {
           </div>
         </div>
         <div className="mt-auto">
+          <div className="mb-4 w-full px-4">
+            <Link to="/create">
+              <Button className="w-full items-center">
+                <RectangleGoggles />
+                Create VR
+              </Button>
+            </Link>
+          </div>
           <Separator className="mb-4" />
           <p className="text-muted-foreground px-6 text-xs">
             Living Paintings &copy; {new Date().getFullYear()}

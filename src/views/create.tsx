@@ -117,8 +117,8 @@ function Create() {
                         <RadioGroupItem value="indoor" className="sr-only" />
                       </FormControl>
 
-                      <div className="border-muted hover:border-accent flex h-full w-full items-center justify-center gap-4 rounded-md border-2 px-3 py-1 transition">
-                        <House />
+                      <div className="border-muted hover:border-accent flex h-full w-full items-center justify-center gap-3 rounded-md border-2 px-3 py-1 transition">
+                        <House size={20} />
                         <span>Indoor</span>
                       </div>
                     </FormLabel>
@@ -128,8 +128,8 @@ function Create() {
                       <FormControl>
                         <RadioGroupItem value="outdoor" className="sr-only" />
                       </FormControl>
-                      <div className="border-muted hover:border-accent flex h-full w-full items-center justify-center gap-4 rounded-md border-2 px-3 py-1 transition">
-                        <TentTree />
+                      <div className="border-muted hover:border-accent flex h-full w-full items-center justify-center gap-3 rounded-md border-2 px-3 py-1 transition">
+                        <TentTree size={20} />
                         <span>Outdoor</span>
                       </div>
                     </FormLabel>

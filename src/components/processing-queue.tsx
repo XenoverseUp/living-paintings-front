@@ -75,7 +75,7 @@ export default function ProcessingQueue() {
         </TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[100px]">ID</TableHead>
+            <TableHead className="w-[100px]">Job ID</TableHead>
             <TableHead>Status</TableHead>
             <TableHead>Environment</TableHead>
             <TableHead className="text-right">Actions</TableHead>
