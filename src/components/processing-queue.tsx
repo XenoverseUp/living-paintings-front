@@ -13,20 +13,14 @@ import {
   Ban,
   CircleCheckBig,
   CircleHelp,
-  MoveRight,
   Text,
   Timer,
 } from "lucide-react";
-import { Button } from "./ui/button";
+
 import { cn } from "@/lib/utils";
 import { Link } from "react-router";
 import EditPromptsDialog from "./edit-prompts-dialog";
-
-interface JobMeta {
-  id: string;
-  status: "processing" | "done" | "generating prompts" | "waiting prompts";
-  environment: "indoor" | "outdoor";
-}
+import type { JobMeta } from "@/stores/job.store";
 
 export default function ProcessingQueue() {
   const [jobs, setJobs] = useState<JobMeta[]>([
