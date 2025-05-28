@@ -34,7 +34,7 @@ function XRPlayground() {
         .catch(() => console.log(`Couldn't find the depth map for ${id}.`))
         .finally(() => setIsReady((state) => ({ ...state, depth: true })));
 
-      import(`@/assets/curated/${id}/soundscape.wav`)
+      import(`@/assets/curated/${id}/soundscape.mp3`)
         .then((mod) => setAudioPath(mod.default))
         .catch(() => console.log(`Couldn't find the soundscape for ${id}.`))
         .finally(() => setIsReady((state) => ({ ...state, audio: true })));
