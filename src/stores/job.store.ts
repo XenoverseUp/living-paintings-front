@@ -22,8 +22,14 @@ export const useJobStore = create<JobStore>()((set) => ({
 
   fetchJobs: async () => {
     set({ loading: true });
-    const jobs = await getAllJobs();
-    set({ jobs, loading: false });
+    try {
+      const jobs = await getAllJobs();
+      set({ jobs });
+    } catch {
+      console.log("Couldn't fetch all meta.");
+    } finally {
+      set({ loading: false });
+    }
   },
 
   revalidate: async () => {

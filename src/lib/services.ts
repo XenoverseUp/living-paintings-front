@@ -2,10 +2,13 @@ import type { JobMeta } from "@/stores/job.store";
 import { attempt } from "./utils";
 
 export async function createJob(formData: FormData): Promise<Response> {
-  const res = await fetch(`${process.env.VITE_BACKEND_HOST}/generate_prompt`, {
-    method: "POST",
-    body: formData,
-  });
+  const res = await fetch(
+    `${import.meta.env.VITE_BACKEND_HOST}/generate_prompt`,
+    {
+      method: "POST",
+      body: formData,
+    },
+  );
 
   return res;
 }
@@ -16,7 +19,7 @@ export async function getGeneratedPrompts(id: string): Promise<{
   ground?: string;
 }> {
   const [, res] = await attempt<Response>(
-    fetch(`${process.env.VITE_BACKEND_HOST}/prompt_status/${id}`),
+    fetch(`${import.meta.env.VITE_BACKEND_HOST}/prompt_status/${id}`),
   );
 
   if (res === null) return {};
@@ -60,18 +63,21 @@ export async function submitPrompts({
     ground_prompt: ground,
   });
 
-  const res = await fetch(`${process.env.VITE_BACKEND_HOST}/run_with_prompts`, {
-    method: "POST",
-    headers,
-    body,
-  });
+  const res = await fetch(
+    `${import.meta.env.VITE_BACKEND_HOST}/run_with_prompts`,
+    {
+      method: "POST",
+      headers,
+      body,
+    },
+  );
 
   return res;
 }
 
 export async function getAllJobs(): Promise<JobMeta[]> {
   const [, res] = await attempt(
-    fetch(`${process.env.VITE_BACKEND_HOST}/all_meta`),
+    fetch(`${import.meta.env.VITE_BACKEND_HOST}/all_meta`),
   );
 
   if (res === null) return [] as JobMeta[];
