@@ -129,7 +129,7 @@ function Panorama({
       position={[0, 2, 0]}
       rotation={[0, -Math.PI / 2, 0]}
     >
-      <sphereGeometry args={[6, 2048, 2048]} />
+      <sphereGeometry args={[6, 512, 512]} />
       <meshStandardMaterial
         map={panorama}
         displacementMap={depthMap}
