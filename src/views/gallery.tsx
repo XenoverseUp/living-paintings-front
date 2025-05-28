@@ -1,4 +1,4 @@
-import { RectangleGoggles } from "lucide-react";
+import { GalleryHorizontal, RectangleGoggles } from "lucide-react";
 import { Link } from "react-router";
 
 import { Button } from "@/components/ui/button";
@@ -99,6 +99,7 @@ function Gallery() {
       <Header
         title="VR Gallery"
         subtitle="Curated list of VR experiences from our team."
+        icon={GalleryHorizontal}
         actions={
           <Link to="/create" className="block">
             <Button variant="default">
