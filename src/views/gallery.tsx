@@ -115,12 +115,12 @@ function Gallery() {
         }
       />
       <div className="relative grow">
-        <ScrollArea className="size-full" type="hover">
+        <ScrollArea className="size-full" type="always">
           <div className="flex h-full w-max gap-4 px-8">
             {curated.map(({ id, preview, subtitle, title }) => (
               <XRCard
                 key={`xr-card-${id}`}
-                className="h-full w-84"
+                className="h-full w-84 snap-start"
                 local
                 id={id}
                 title={title}
