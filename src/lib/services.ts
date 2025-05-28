@@ -26,7 +26,11 @@ export async function getGeneratedPrompts(id: string): Promise<{
 
   const data: {
     job_id: string;
-    prompt_status: "done" | "pending" | "error";
+    prompt_status:
+      | "processing"
+      | "done"
+      | "generating prompts"
+      | "waiting prompts";
     prompts: {
       atmosphere: string;
       sky_or_ceiling: string;
@@ -59,8 +63,8 @@ export async function submitPrompts({
   const body = new URLSearchParams({
     job_id: id,
     atmosphere_prompt: atmosphere,
-    sky_prompt: sky,
-    ground_prompt: ground,
+    sky_or_ceiling_prompt: sky,
+    ground_or_floor_prompt: ground,
   });
 
   const res = await fetch(
@@ -88,7 +92,7 @@ export async function getAllJobs(): Promise<JobMeta[]> {
 
   return Object.entries(jobs).map(([k, v]) => ({
     id: k,
-    environment: "indoor",
-    status: v,
+    environment: v?.environment,
+    status: v?.status,
   })) as JobMeta[];
 }

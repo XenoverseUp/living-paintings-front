@@ -23,22 +23,27 @@ function XRPlayground() {
   });
 
   useEffect(() => {
-    if (query.get("local") === "true" && id) {
-      import(`@/assets/curated/${id}/pano.jpg`)
-        .then((mod) => setPanoPath(mod.default))
-        .catch(() => console.log(`Couldn't find the panorama for ${id}.`))
-        .finally(() => setIsReady((state) => ({ ...state, pano: true })));
+    if (!id) return;
 
-      import(`@/assets/curated/${id}/depth.jpg`)
-        .then((mod) => setDepthPath(mod.default))
-        .catch(() => console.log(`Couldn't find the depth map for ${id}.`))
-        .finally(() => setIsReady((state) => ({ ...state, depth: true })));
+    const isLocal = query.get("local") === "true";
 
-      import(`@/assets/curated/${id}/soundscape.mp3`)
-        .then((mod) => setAudioPath(mod.default))
-        .catch(() => console.log(`Couldn't find the soundscape for ${id}.`))
-        .finally(() => setIsReady((state) => ({ ...state, audio: true })));
+    if (isLocal) {
+      const basePath = `/assets/curated/${id}`;
+
+      setPanoPath(`${basePath}/pano.jpg`);
+      setDepthPath(`${basePath}/depth.jpg`);
+      setAudioPath(`${basePath}/soundscape.mp3`);
+    } else {
+      setPanoPath(`${import.meta.env.VITE_BACKEND_HOST}/pano/${id}`);
+      setDepthPath(`${import.meta.env.VITE_BACKEND_HOST}/depth/${id}`);
+      setAudioPath(`${import.meta.env.VITE_BACKEND_HOST}/soundscape/${id}`);
     }
+
+    setIsReady({
+      pano: true,
+      depth: true,
+      audio: true,
+    });
   }, [id, query]);
 
   return (

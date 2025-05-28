@@ -40,8 +40,10 @@ export default function ProcessingQueue() {
         </TableHeader>
         <TableBody>
           {jobs.map(({ id, status, environment }) => (
-            <TableRow>
-              <TableCell className="font-medium">{id}</TableCell>
+            <TableRow key={`row-${id}`}>
+              <TableCell className="font-medium">
+                {id.split("-").at(0)}
+              </TableCell>
               <TableCell className={cn("flex items-center gap-2")}>
                 <span className="opacity-50">
                   {
