@@ -129,7 +129,7 @@ function Panorama({
   return (
     <mesh
       scale={[-1, 1, 1]}
-      position={[0, indoor ? 1 : 2, 0]}
+      position={[0, indoor ? 0 : 2, 0]}
       rotation={[0, -Math.PI / 2, 0]}
     >
       <sphereGeometry args={[indoor ? 3 : 6, 768, 768]} />

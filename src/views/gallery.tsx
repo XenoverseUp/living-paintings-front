@@ -108,7 +108,7 @@ function Gallery() {
             {curated.map(({ id, subtitle, title, indoor }) => (
               <XRCard
                 key={`xr-card-${id}`}
-                className="h-full w-84 snap-start"
+                className="h-full w-84"
                 local
                 id={id}
                 title={title}

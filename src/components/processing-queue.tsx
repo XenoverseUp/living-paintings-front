@@ -70,7 +70,9 @@ export default function ProcessingQueue() {
               <TableCell>
                 <div className="flex w-full justify-end text-xs font-medium">
                   {status === "done" ? (
-                    <Link to={`/xr-playground/${id}?local=false`}>
+                    <Link
+                      to={`/xr-playground/${id}?local=false&env=${environment}`}
+                    >
                       <button className="flex cursor-pointer items-center gap-1 text-green-600 underline-offset-2 hover:underline">
                         Ready For VR
                         <ArrowRight size={16} />
