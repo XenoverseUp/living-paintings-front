@@ -9,6 +9,7 @@ type Props = {
   title: string;
   subtitle: string;
   local?: boolean;
+  indoor: boolean;
 } & Partial<HTMLDivElement>;
 
 export default function XRCard({
@@ -18,6 +19,7 @@ export default function XRCard({
   subtitle,
   title,
   local = false,
+  indoor,
 }: Props) {
   return (
     <figure className={cn(className, "relative isolate flex flex-col")}>
@@ -31,7 +33,10 @@ export default function XRCard({
         <span className="text-xs font-medium opacity-85">VR Compatible</span>
       </div>
       <div className="group relative w-full grow cursor-pointer overflow-hidden rounded bg-white">
-        <Link to={`/xr-playground/${id}?local=${local}`} viewTransition>
+        <Link
+          to={`/xr-playground/${id}?local=${local}&env=${indoor ? "indoor" : "outdoor"}`}
+          viewTransition
+        >
           <img
             src={preview}
             className="absolute inset-0 size-full object-cover transition-transform duration-300 group-hover:scale-104"

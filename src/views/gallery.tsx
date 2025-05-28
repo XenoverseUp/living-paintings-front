@@ -11,28 +11,33 @@ const curated = [
     title: "Accolade",
     subtitle: "Have you seen the Lancelot getting the Order of Knighthood?",
     id: "accolade",
+    indoor: true,
   },
   {
     title: "Fields",
     subtitle:
       "Horses were meant to wander around the world; but they meet mankind.",
     id: "fields",
+    indoor: false,
   },
   {
     title: "Wanderer Above The Sea of Fog",
     subtitle:
       "Gaze out on a landscape covered in a thick sea of fog, with this wanderer.",
     id: "wanderer",
+    indoor: false,
   },
   {
     title: "Starry Night",
     subtitle: "See the Van Gogh's famous painting in third dimension.",
     id: "starry-night",
+    indoor: false,
   },
   {
     title: "Ohio",
     subtitle: "A lonely coast from the early industrial revolution era.",
     id: "ohio",
+    indoor: false,
   },
 
   {
@@ -40,33 +45,39 @@ const curated = [
     subtitle:
       "The goddess arriving at the shore after her birth, when she had emerged from the sea fully-grown.",
     id: "venus",
+    indoor: true,
   },
   {
     title: "Achilles and Patroclus",
     subtitle:
       "Observe the relationship of two lovers described by Homer (kinda gay tho).",
     id: "achilles",
+    indoor: false,
   },
   {
     title: "Arnolfini Portrait",
     subtitle: "Take a look at what's behind of an already mysterious portait.",
     id: "arnolfini",
+    indoor: true,
   },
   {
     title: "Yörük Bibi",
     subtitle: "A humble and happy life, seen through the third dimension.",
     id: "breton",
+    indoor: true,
   },
   {
     title: "Mountain Goat",
     subtitle:
       "Experience some fresh mountain air, along with some delicate goat poop.",
     id: "mountain-goat",
+    indoor: false,
   },
   {
     title: "Windmill",
     subtitle: "Mill. Mill. Windmill.",
     id: "mill",
+    indoor: false,
   },
 ];
 
@@ -94,7 +105,7 @@ function Gallery() {
       <div className="relative grow">
         <ScrollArea className="size-full" type="always">
           <div className="flex h-full w-max gap-4 px-8">
-            {curated.map(({ id, subtitle, title }) => (
+            {curated.map(({ id, subtitle, title, indoor }) => (
               <XRCard
                 key={`xr-card-${id}`}
                 className="h-full w-84 snap-start"
@@ -103,6 +114,7 @@ function Gallery() {
                 title={title}
                 subtitle={subtitle}
                 preview={`/assets/curated/${id}/input.jpg`}
+                indoor={indoor}
               />
             ))}
           </div>

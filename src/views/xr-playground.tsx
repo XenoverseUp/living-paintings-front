@@ -78,6 +78,7 @@ function XRPlayground() {
               panoSrc={panoPath!}
               depthSrc={depthPath!}
               audioSrc={audioPath}
+              indoor={query.get("env") === "indoor"}
             />
           )}
         </Canvas>
@@ -90,10 +91,12 @@ function Panorama({
   panoSrc,
   depthSrc,
   audioSrc,
+  indoor,
 }: {
   panoSrc: string;
   depthSrc: string;
   audioSrc: string | null;
+  indoor?: boolean;
 }) {
   const [panorama, depthMap] = useLoader(THREE.TextureLoader, [
     panoSrc,
@@ -126,15 +129,15 @@ function Panorama({
   return (
     <mesh
       scale={[-1, 1, 1]}
-      position={[0, 2, 0]}
+      position={[0, indoor ? 1 : 2, 0]}
       rotation={[0, -Math.PI / 2, 0]}
     >
-      <sphereGeometry args={[6, 1024, 1024]} />
+      <sphereGeometry args={[indoor ? 3 : 6, 768, 768]} />
       <meshStandardMaterial
         map={panorama}
         displacementMap={depthMap}
-        displacementScale={4}
-        displacementBias={-2}
+        displacementScale={indoor ? 2 : 4}
+        displacementBias={indoor ? -1 : -2}
         side={THREE.BackSide}
         metalness={0}
         roughness={0.6}
