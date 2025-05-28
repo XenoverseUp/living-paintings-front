@@ -10,6 +10,7 @@ export interface JobMeta {
 interface JobStore {
   jobs: JobMeta[];
   loading: boolean;
+  revalidating: boolean;
   fetchJobs: () => Promise<void>;
   revalidate: () => void;
 }
@@ -17,6 +18,7 @@ interface JobStore {
 export const useJobStore = create<JobStore>()((set) => ({
   jobs: [],
   loading: false,
+  revalidating: false,
 
   fetchJobs: async () => {
     set({ loading: true });
@@ -25,7 +27,8 @@ export const useJobStore = create<JobStore>()((set) => ({
   },
 
   revalidate: async () => {
+    set({ revalidating: true });
     const jobs = await getAllJobs();
-    set({ jobs });
+    set({ jobs, revalidating: false });
   },
 }));

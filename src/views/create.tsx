@@ -271,7 +271,7 @@ function Create() {
             )}
           />
 
-          <Button type="submit" className="w-full">
+          <Button disabled={loading} type="submit" className="w-full">
             {loading ? "Generating..." : "Generate"}
           </Button>
         </form>

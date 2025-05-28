@@ -27,6 +27,9 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "./ui/input";
 import { Separator } from "./ui/separator";
+import { getGeneratedPrompts, submitPrompts } from "@/lib/services";
+import { attempt } from "@/lib/utils";
+import { useJobStore } from "@/stores/job.store";
 
 interface Props {
   children: ReactNode;
@@ -48,6 +51,8 @@ export default function EditPromptsDialog({
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
 
+  const revalidate = useJobStore((store) => store.revalidate);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -61,11 +66,12 @@ export default function EditPromptsDialog({
     (async () => {
       setLoading(true);
       try {
-        // const defaultPrompts = await fetchPrompts(id);
+        const defaultPrompts = await getGeneratedPrompts(id);
+
         form.reset({
-          atmosphere_prompt: "",
-          ground_or_floor_prompt: "",
-          sky_or_ceiling_prompt: "",
+          atmosphere_prompt: defaultPrompts?.atmosphere ?? "",
+          sky_or_ceiling_prompt: defaultPrompts?.sky ?? "",
+          ground_or_floor_prompt: defaultPrompts?.ground ?? "",
         });
       } catch (error) {
         console.error("Failed to fetch prompts", error);
@@ -76,7 +82,21 @@ export default function EditPromptsDialog({
   }, [id, form]);
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
-    console.log(data);
+    setLoading(true);
+    const [, res] = await attempt(
+      submitPrompts({
+        atmosphere: data.atmosphere_prompt,
+        ground: data.ground_or_floor_prompt,
+        sky: data.sky_or_ceiling_prompt,
+        id,
+      }),
+    );
+
+    setLoading(false);
+
+    if (res === null || !res.ok) return alert("Error submitting the prompts.");
+    revalidate();
+    setOpen(false);
   };
 
   return (

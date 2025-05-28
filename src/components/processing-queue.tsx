@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   Table,
   TableBody,
@@ -20,46 +19,10 @@ import {
 import { cn } from "@/lib/utils";
 import { Link } from "react-router";
 import EditPromptsDialog from "./edit-prompts-dialog";
-import type { JobMeta } from "@/stores/job.store";
+import { useJobStore } from "@/stores/job.store";
 
 export default function ProcessingQueue() {
-  const [jobs, setJobs] = useState<JobMeta[]>([
-    {
-      id: "4743904",
-      status: "processing",
-      environment: "indoor",
-    },
-    {
-      id: "5821940",
-      status: "done",
-      environment: "outdoor",
-    },
-    {
-      id: "4923011",
-      status: "generating prompts",
-      environment: "indoor",
-    },
-    {
-      id: "4382910",
-      status: "waiting prompts",
-      environment: "outdoor",
-    },
-    {
-      id: "7283940",
-      status: "processing",
-      environment: "outdoor",
-    },
-    {
-      id: "2938401",
-      status: "done",
-      environment: "indoor",
-    },
-    {
-      id: "1203984",
-      status: "waiting prompts",
-      environment: "indoor",
-    },
-  ]);
+  const jobs = useJobStore((store) => store.jobs);
 
   return (
     <div className="px-8 pb-8">
