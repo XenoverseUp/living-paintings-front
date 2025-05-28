@@ -1,5 +1,6 @@
 import * as THREE from "three";
-import { Canvas, useLoader } from "@react-three/fiber";
+// import { Color, AudioListener, AudioLoader, Audio } from 'three';
+import { Canvas, useLoader, useThree } from "@react-three/fiber";
 
 import EnableXR from "@/components/enable-xr";
 import { useParams } from "react-router";
@@ -13,19 +14,32 @@ function XRPlayground() {
 
   const [panoPath, setPanoPath] = useState<string | null>(null);
   const [depthPath, setDepthPath] = useState<string | null>(null);
+  const [audioPath, setAudioPath] = useState<string | null>(null);
+
+  const [isReady, setIsReady] = useState({
+    pano: false,
+    depth: false,
+    audio: false,
+  });
 
   useEffect(() => {
     if (query.get("local") === "true" && id) {
-      import(`@/assets/curated/${id}/pano.jpg`).then((mod) =>
-        setPanoPath(mod.default),
-      );
-      import(`@/assets/curated/${id}/depth.jpg`).then((mod) =>
-        setDepthPath(mod.default),
-      );
+      import(`@/assets/curated/${id}/pano.jpg`)
+        .then((mod) => setPanoPath(mod.default))
+        .catch(() => console.log(`Couldn't find the panorama for ${id}.`))
+        .finally(() => setIsReady((state) => ({ ...state, pano: true })));
+
+      import(`@/assets/curated/${id}/depth.jpg`)
+        .then((mod) => setDepthPath(mod.default))
+        .catch(() => console.log(`Couldn't find the depth map for ${id}.`))
+        .finally(() => setIsReady((state) => ({ ...state, depth: true })));
+
+      import(`@/assets/curated/${id}/soundscape.wav`)
+        .then((mod) => setAudioPath(mod.default))
+        .catch(() => console.log(`Couldn't find the soundscape for ${id}.`))
+        .finally(() => setIsReady((state) => ({ ...state, audio: true })));
     }
   }, [id, query]);
-
-  const isReady = panoPath && depthPath;
 
   return (
     <div className="relative isolate flex h-screen w-full items-center justify-center overflow-hidden bg-black">
@@ -47,10 +61,75 @@ function XRPlayground() {
         <Canvas camera={{ position: [0, 0, 0] }}>
           <EnableXR />
           <Lights />
-          {isReady && <Panorama panoSrc={panoPath} depthSrc={depthPath} />}
+
+          {Object.values(isReady).every((v) => v) && (
+            <Panorama
+              panoSrc={panoPath!}
+              depthSrc={depthPath!}
+              audioSrc={audioPath}
+            />
+          )}
         </Canvas>
       </Suspense>
     </div>
+  );
+}
+
+function Panorama({
+  panoSrc,
+  depthSrc,
+  audioSrc,
+}: {
+  panoSrc: string;
+  depthSrc: string;
+  audioSrc: string | null;
+}) {
+  const [panorama, depthMap] = useLoader(THREE.TextureLoader, [
+    panoSrc,
+    depthSrc,
+  ]);
+
+  const { camera } = useThree();
+
+  // eslint-disable-next-line
+  const audioBuffer = audioSrc ? useLoader(THREE.AudioLoader, audioSrc) : null;
+
+  useEffect(() => {
+    if (!audioBuffer) return;
+
+    const listener = new THREE.AudioListener();
+    camera.add(listener);
+
+    const sound = new THREE.Audio(listener);
+    sound.setBuffer(audioBuffer);
+    sound.setLoop(true);
+    sound.setVolume(0.5);
+    sound.play();
+
+    return () => {
+      sound.stop();
+      camera.remove(listener);
+    };
+  }, [camera, audioBuffer]);
+
+  return (
+    <mesh
+      scale={[-1, 1, 1]}
+      position={[0, 2, 0]}
+      rotation={[0, -Math.PI / 2, 0]}
+    >
+      <sphereGeometry args={[6, 2048, 2048]} />
+      <meshStandardMaterial
+        map={panorama}
+        displacementMap={depthMap}
+        displacementScale={4}
+        displacementBias={-2}
+        side={THREE.BackSide}
+        metalness={0}
+        roughness={0.6}
+        dithering={true}
+      />
+    </mesh>
   );
 }
 
@@ -70,38 +149,6 @@ function Lights() {
         position={[0, 1, 0]}
       />
     </>
-  );
-}
-
-function Panorama({
-  panoSrc,
-  depthSrc,
-}: {
-  panoSrc: string;
-  depthSrc: string;
-}) {
-  const [panorama, depthMap] = useLoader(THREE.TextureLoader, [
-    panoSrc,
-    depthSrc,
-  ]);
-  return (
-    <mesh
-      scale={[-1, 1, 1]}
-      position={[0, 2, 0]}
-      rotation={[0, -Math.PI / 2, 0]}
-    >
-      <sphereGeometry args={[6, 1024, 1024]} />
-      <meshStandardMaterial
-        map={panorama}
-        displacementMap={depthMap}
-        displacementScale={4}
-        displacementBias={-2}
-        side={THREE.BackSide}
-        metalness={0}
-        roughness={0.6}
-        dithering={true}
-      />
-    </mesh>
   );
 }
 
