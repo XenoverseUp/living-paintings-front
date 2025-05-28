@@ -17,9 +17,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { createJob } from "@/lib/services";
+import { attempt } from "@/lib/utils";
+import { useJobStore } from "@/stores/job.store";
+import { useNavigate } from "react-router";
+import { useState } from "react";
 
 const formSchema = z.object({
-  frame: z.instanceof(FileList),
+  frame: z.instanceof(FileList).refine((files) => files.length > 0, {
+    message: "A file is required",
+  }),
   in_out: z.enum(["indoor", "outdoor"]),
   guidance_scale: z.number().min(3.0).max(9.0),
   fov: z.number().min(45).max(120),
@@ -41,22 +47,37 @@ function Create() {
     },
   });
 
-  const frameRef = form.register("frame");
+  const revalidate = useJobStore((state) => state.revalidate);
+  const navigate = useNavigate();
+
+  const [loading, setLoading] = useState(false);
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
-    console.log(data);
+    setLoading(true);
 
     const { atmosphere, fov, frame, ground, guidance_scale, in_out, sky } =
       data;
 
-    const res = await createJob({
-      atmosphere,
-      fov,
-      ground,
-      guidance_scale,
-      in_out,
-      sky,
-    });
+    const formData = new FormData();
+
+    if (frame?.length > 0) formData.append("file", frame[0]);
+    formData.append("fovdeg", fov.toString());
+    formData.append("fovmap_atmosphere", atmosphere.toString());
+    formData.append("fovmap_sky_or_ceiling", sky.toString());
+    formData.append("fovmap_ground_or_floor", ground.toString());
+    formData.append("in_out", in_out);
+    formData.append("guidance_scale", guidance_scale.toString());
+
+    const [, res] = await attempt(createJob(formData));
+
+    setLoading(false);
+
+    if (res === null || !res.ok) return alert("Error submitting the job.");
+    const id = (await res.json())["job_id"];
+
+    if (!id) alert("An error occured.");
+    revalidate();
+    navigate("/queue");
   };
 
   return (
@@ -75,22 +96,23 @@ function Create() {
           <FormField
             control={form.control}
             name="frame"
-            render={() => (
+            render={({ field }) => (
               <FormItem>
                 <FormLabel>
-                  <ImagePlus className="size-4" />
+                  <ImagePlus className="mr-2 inline size-4" />
                   Frame
                 </FormLabel>
                 <FormControl>
                   <Input
                     type="file"
-                    placeholder="Initial Frame"
-                    {...frameRef}
+                    accept="image/*"
+                    onChange={(e) => field.onChange(e.target.files)}
+                    ref={field.ref}
                   />
                 </FormControl>
                 <FormDescription>
                   This is the initial frame of the panorama. Our pipeline will
-                  generate rest of the panorama based on this frame.
+                  generate the rest of the panorama based on this frame.
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -250,7 +272,7 @@ function Create() {
           />
 
           <Button type="submit" className="w-full">
-            Generate
+            {loading ? "Generating..." : "Generate"}
           </Button>
         </form>
       </Form>

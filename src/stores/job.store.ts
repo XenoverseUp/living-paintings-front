@@ -16,7 +16,7 @@ interface JobStore {
 
 export const useJobStore = create<JobStore>()((set) => ({
   jobs: [],
-  loading: true,
+  loading: false,
 
   fetchJobs: async () => {
     set({ loading: true });

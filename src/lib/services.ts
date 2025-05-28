@@ -1,26 +1,13 @@
 import type { JobMeta } from "@/stores/job.store";
 import { attempt } from "./utils";
 
-export async function createJob({
-  in_out,
-  guidance_scale,
-  fov,
-  atmosphere,
-  sky,
-  ground,
-}: {
-  in_out: "indoor" | "outdoor";
-  guidance_scale: number;
-  fov: number;
-  atmosphere: number;
-  sky: number;
-  ground: number;
-}) {
-  const res = await fetch(`${process.env.VITE_BACKEND_HOST}/create`, {
+export async function createJob(formData: FormData): Promise<Response> {
+  const res = await fetch(`${process.env.VITE_BACKEND_HOST}/generate-prompt`, {
     method: "POST",
+    body: formData,
   });
 
-  return in_out;
+  return res;
 }
 
 export async function getAllJobs(): Promise<JobMeta[]> {
