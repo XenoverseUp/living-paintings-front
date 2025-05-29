@@ -32,6 +32,7 @@ const formSchema = z.object({
   atmosphere: z.number().min(45).max(120),
   sky: z.number().min(45).max(120),
   ground: z.number().min(45).max(120),
+  key: z.string(),
 });
 
 function Create() {
@@ -44,6 +45,7 @@ function Create() {
       sky: 100,
       ground: 100,
       in_out: "indoor",
+      key: "",
     },
   });
 
@@ -55,7 +57,7 @@ function Create() {
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     setLoading(true);
 
-    const { atmosphere, fov, frame, ground, guidance_scale, in_out, sky } =
+    const { atmosphere, key, fov, frame, ground, guidance_scale, in_out, sky } =
       data;
 
     const formData = new FormData();
@@ -67,6 +69,7 @@ function Create() {
     formData.append("fovmap_ground_or_floor", ground.toString());
     formData.append("in_out", in_out);
     formData.append("guidance_scale", guidance_scale.toString());
+    formData.append("key", key);
 
     const [, res] = await attempt(createJob(formData));
 
@@ -266,6 +269,21 @@ function Create() {
                 <FormDescription>
                   The ground angle of the generation.
                 </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="key"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>API Secret</FormLabel>
+                <FormControl>
+                  <Input {...field} type="text" />
+                </FormControl>
+                <FormDescription>The API key for generation.</FormDescription>
                 <FormMessage />
               </FormItem>
             )}

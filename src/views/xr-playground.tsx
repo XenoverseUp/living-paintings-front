@@ -132,7 +132,7 @@ function Panorama({
       position={[0, indoor ? 1.5 : 2, 0]}
       rotation={[0, -Math.PI / 2, 0]}
     >
-      <sphereGeometry args={[indoor ? 5 : 6, 768, 768]} />
+      <sphereGeometry args={[indoor ? 5 : 6, 640, 640]} />
       <meshStandardMaterial
         map={panorama}
         displacementMap={depthMap}
