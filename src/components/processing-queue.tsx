@@ -32,18 +32,16 @@ export default function ProcessingQueue() {
         </TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[100px]">Job ID</TableHead>
+            <TableHead className="w-[350px]">Name</TableHead>
             <TableHead>Status</TableHead>
             <TableHead>Environment</TableHead>
             <TableHead className="text-right">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {jobs.map(({ id, status, environment }) => (
+          {jobs.map(({ id, status, environment, name }) => (
             <TableRow key={`row-${id}`}>
-              <TableCell className="font-medium">
-                {id.split("-").at(0)}
-              </TableCell>
+              <TableCell className="font-medium">{name}</TableCell>
               <TableCell className={cn("flex items-center gap-2")}>
                 <span className="opacity-50">
                   {

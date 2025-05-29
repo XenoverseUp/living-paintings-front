@@ -33,6 +33,7 @@ const formSchema = z.object({
   sky: z.number().min(45).max(120),
   ground: z.number().min(45).max(120),
   key: z.string(),
+  name: z.string().min(4),
 });
 
 function Create() {
@@ -57,8 +58,17 @@ function Create() {
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     setLoading(true);
 
-    const { atmosphere, key, fov, frame, ground, guidance_scale, in_out, sky } =
-      data;
+    const {
+      atmosphere,
+      key,
+      name,
+      fov,
+      frame,
+      ground,
+      guidance_scale,
+      in_out,
+      sky,
+    } = data;
 
     const formData = new FormData();
 
@@ -70,6 +80,7 @@ function Create() {
     formData.append("in_out", in_out);
     formData.append("guidance_scale", guidance_scale.toString());
     formData.append("key", key);
+    formData.append("name", name);
 
     const [, res] = await attempt(createJob(formData));
 
@@ -96,6 +107,23 @@ function Create() {
           className="space-y-8 px-8 pb-12"
           onSubmit={form.handleSubmit(onSubmit)}
         >
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Scene Name</FormLabel>
+                <FormControl>
+                  <Input {...field} type="text" />
+                </FormControl>
+                <FormDescription>
+                  The unique name of the VR scene.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
           <FormField
             control={form.control}
             name="frame"

@@ -5,6 +5,7 @@ export interface JobMeta {
   id: string;
   status: "processing" | "done" | "generating prompts" | "waiting prompts";
   environment: "indoor" | "outdoor";
+  name: string;
 }
 
 interface JobStore {

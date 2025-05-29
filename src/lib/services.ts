@@ -94,5 +94,6 @@ export async function getAllJobs(): Promise<JobMeta[]> {
     id: k,
     environment: v?.environment,
     status: v?.status,
+    name: v?.name,
   })) as JobMeta[];
 }
