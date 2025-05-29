@@ -129,15 +129,15 @@ function Panorama({
   return (
     <mesh
       scale={[-1, 1, 1]}
-      position={[0, indoor ? 1.5 : 2, 0]}
+      position={[0, indoor ? 1.5 : 2.25, 0]}
       rotation={[0, -Math.PI / 2, 0]}
     >
-      <sphereGeometry args={[indoor ? 5 : 6, 640, 640]} />
+      <sphereGeometry args={[indoor ? 5 : 7, 640, 640]} />
       <meshStandardMaterial
         map={panorama}
         displacementMap={depthMap}
-        displacementScale={indoor ? 2 : 4}
-        displacementBias={indoor ? -1 : -2}
+        displacementScale={indoor ? 2 : 4.5}
+        displacementBias={indoor ? -1 : -2.5}
         side={THREE.BackSide}
         metalness={0}
         roughness={0.6}
