@@ -246,11 +246,15 @@ function Create() {
           <FormField
             control={form.control}
             name="pitch"
-            render={({ field }) => (
+            render={({ field: { value, onChange } }) => (
               <FormItem>
                 <FormLabel>Pitch Angle</FormLabel>
                 <FormControl>
-                  <Input {...field} type="type" />
+                  <Input
+                    value={value}
+                    onChange={(v) => onChange(Number(v.target.value))}
+                    type="number"
+                  />
                 </FormControl>
                 <FormDescription>The pitch of the generation.</FormDescription>
                 <FormMessage />
