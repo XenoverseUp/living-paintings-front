@@ -8,6 +8,7 @@ import { Library, Loader } from "lucide-react";
 import { useEffect } from "react";
 
 function Queue() {
+  const firstFetch = useJobStore((store) => store.firstFetch);
   const fetchJobs = useJobStore((store) => store.fetchJobs);
   const loading = useJobStore((store) => store.loading);
   const length = useJobStore((store) => store.jobs.length);
@@ -15,13 +16,9 @@ function Queue() {
   const revalidate = useJobStore((store) => store.revalidate);
 
   useEffect(() => {
-    if (length === 0) {
-      fetchJobs();
-      return;
-    }
+    if (firstFetch) fetchJobs();
 
     const interval = setInterval(revalidate, 5000);
-
     return () => clearInterval(interval);
   }, []);
 
