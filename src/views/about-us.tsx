@@ -74,10 +74,9 @@ interface AboutCardProps {
 function AboutCard({ src, name, subtitle, linkedin, github }: AboutCardProps) {
   return (
     <div className="w-full space-y-4">
-      <img
-        className="aspect-[3_/_4] rounded border bg-neutral-100 object-cover"
-        src={src}
-      />
+      <div className="relative aspect-[3_/_4] overflow-hidden rounded border bg-neutral-100">
+        <img className="absolute inset-0 object-cover" src={src} />
+      </div>
       <header className="flex items-center justify-between px-2">
         <div className="space-y-1">
           <h3 className="leading-none font-semibold">{name}</h3>
