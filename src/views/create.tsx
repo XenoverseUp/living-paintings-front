@@ -34,6 +34,7 @@ const formSchema = z.object({
   ground: z.number().min(45).max(120),
   key: z.string(),
   name: z.string().min(4),
+  pitch: z.number().min(40).max(60),
 });
 
 function Create() {
@@ -45,6 +46,7 @@ function Create() {
       atmosphere: 80,
       sky: 100,
       ground: 100,
+      pitch: 45,
       in_out: "indoor",
       key: "",
     },
@@ -68,6 +70,7 @@ function Create() {
       guidance_scale,
       in_out,
       sky,
+      pitch,
     } = data;
 
     const formData = new FormData();
@@ -81,6 +84,7 @@ function Create() {
     formData.append("guidance_scale", guidance_scale.toString());
     formData.append("key", key);
     formData.append("name", name);
+    formData.append("pitch", pitch.toString());
 
     const [, res] = await attempt(createJob(formData));
 
@@ -238,6 +242,21 @@ function Create() {
           />
 
           <h2 className="font-medium">Field of View Map</h2>
+
+          <FormField
+            control={form.control}
+            name="pitch"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Atmosphere (&deg;)</FormLabel>
+                <FormControl>
+                  <Input {...field} type="type" />
+                </FormControl>
+                <FormDescription>The pitch of the generation.</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
           <FormField
             control={form.control}

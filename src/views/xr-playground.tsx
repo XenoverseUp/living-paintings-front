@@ -1,5 +1,5 @@
 import * as THREE from "three";
-// import { Color, AudioListener, AudioLoader, Audio } from 'three';
+
 import { Canvas, useLoader, useThree } from "@react-three/fiber";
 
 import EnableXR from "@/components/enable-xr";
