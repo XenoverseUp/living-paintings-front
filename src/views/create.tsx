@@ -248,7 +248,7 @@ function Create() {
             name="pitch"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Atmosphere (&deg;)</FormLabel>
+                <FormLabel>Pitch Angle</FormLabel>
                 <FormControl>
                   <Input {...field} type="type" />
                 </FormControl>
