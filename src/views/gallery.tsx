@@ -8,6 +8,19 @@ import XRCard from "@/components/xr-card";
 
 const curated = [
   {
+    title: "Windmill",
+    subtitle: "Mill. Mill. Windmill.",
+    id: "mill",
+    indoor: false,
+  },
+  {
+    title: "Mountain Goat",
+    subtitle:
+      "Experience some fresh mountain air, along with some delicate goat poop.",
+    id: "mountain-goat",
+    indoor: false,
+  },
+  {
     title: "Accolade",
     subtitle: "Have you seen the Lancelot getting the Order of Knighthood?",
     id: "accolade",
@@ -65,19 +78,6 @@ const curated = [
     subtitle: "A humble and happy life, seen through the third dimension.",
     id: "breton",
     indoor: true,
-  },
-  {
-    title: "Mountain Goat",
-    subtitle:
-      "Experience some fresh mountain air, along with some delicate goat poop.",
-    id: "mountain-goat",
-    indoor: false,
-  },
-  {
-    title: "Windmill",
-    subtitle: "Mill. Mill. Windmill.",
-    id: "mill",
-    indoor: false,
   },
 ];
 
