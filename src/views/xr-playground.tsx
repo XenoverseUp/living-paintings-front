@@ -47,7 +47,7 @@ function XRPlayground() {
   }, [id, query]);
 
   return (
-    <div className="relative isolate flex h-screen w-full items-center justify-center overflow-hidden bg-black">
+    <div className="relative isolate flex h-screen w-full items-center justify-center overflow-hidden bg-black select-none">
       <Link to="/">
         <button className="absolute top-4 left-4 z-20 flex items-center justify-center gap-1 overflow-hidden rounded-full border border-white/10 bg-black/20 px-3 py-1.5 text-sm font-medium text-white opacity-85 shadow-lg backdrop-blur-xl select-none hover:bg-black/30">
           <ArrowLeft size={20} />
