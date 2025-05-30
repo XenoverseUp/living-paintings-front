@@ -25,11 +25,8 @@ export default function ProcessingQueue() {
   const jobs = useJobStore((store) => store.jobs);
 
   return (
-    <div className="px-8 pb-8">
+    <div className="overflow-x-auto px-6 pb-8 md:px-8">
       <Table>
-        <TableCaption className="mt-6">
-          Total {jobs.length} jobs in the queue.
-        </TableCaption>
         <TableHeader>
           <TableRow>
             <TableHead className="w-[350px]">Name</TableHead>
@@ -57,7 +54,7 @@ export default function ProcessingQueue() {
                   {
                     {
                       processing: "Processing",
-                      done: "Done",
+                      done: "Success",
                       "waiting prompts": "Waiting for Prompts",
                       "generating prompts": "Generating Prompts",
                     }[status]
@@ -92,6 +89,10 @@ export default function ProcessingQueue() {
           ))}
         </TableBody>
       </Table>
+
+      <p className="text-muted-foreground mt-8 text-center text-sm">
+        Total {jobs.length} jobs in the queue.
+      </p>
     </div>
   );
 }

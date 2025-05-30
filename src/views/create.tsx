@@ -108,7 +108,7 @@ function Create() {
 
       <Form {...form}>
         <form
-          className="space-y-8 px-8 pb-12"
+          className="space-y-8 px-6 pb-12 md:px-8"
           onSubmit={form.handleSubmit(onSubmit)}
         >
           <FormField

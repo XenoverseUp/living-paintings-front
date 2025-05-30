@@ -31,7 +31,7 @@ function Queue() {
         actions={
           <div
             className={cn(
-              "text-muted-foreground flex items-center gap-2 opacity-0 transition-opacity",
+              "text-muted-foreground hidden items-center gap-2 opacity-0 transition-opacity md:flex",
               {
                 "opacity-100": revalidating,
               },

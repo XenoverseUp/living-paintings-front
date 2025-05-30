@@ -27,6 +27,12 @@ const curated = [
     indoor: true,
   },
   {
+    title: "The Great Wave of Kanagawa",
+    subtitle: "The majestic waves of Kanagawa waits for you, in Japan.",
+    id: "kanagawa",
+    indoor: false,
+  },
+  {
     title: "Fields",
     subtitle:
       "Horses were meant to wander around the world; but they meet mankind.",
@@ -89,7 +95,7 @@ function Gallery() {
         subtitle="Curated list of VR experiences from our team."
         icon={GalleryHorizontal}
         actions={
-          <Link to="/create" className="block">
+          <Link to="/create" className="hidden md:block">
             <Button variant="default">
               <RectangleGoggles
                 className="size-4"
@@ -104,7 +110,7 @@ function Gallery() {
       />
       <div className="relative grow">
         <ScrollArea className="size-full" type="always">
-          <div className="flex h-full w-max gap-4 px-8">
+          <div className="flex h-full w-max gap-4 px-6 md:px-8">
             {curated.map(({ id, subtitle, title, indoor }) => (
               <XRCard
                 key={`xr-card-${id}`}

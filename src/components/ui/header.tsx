@@ -16,7 +16,7 @@ export default function Header({
   icon: Icon,
 }: Props) {
   return (
-    <header className="shrink-0 px-8 pt-6">
+    <header className="shrink-0 px-6 pt-6 md:px-8">
       <div className="flex items-center justify-between">
         <div className="space-y-1">
           <h2 className="flex items-center gap-2 text-2xl font-semibold tracking-tight">

@@ -47,7 +47,7 @@ function AboutUs() {
         subtitle="Get to know more about our dream team."
       />
 
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(20rem,1fr))] gap-x-4 gap-y-8 px-8 pb-8">
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(16rem,1fr))] gap-x-4 gap-y-8 px-6 pb-8 md:px-8">
         {members.map((member) => (
           <AboutCard
             key={member.name}
