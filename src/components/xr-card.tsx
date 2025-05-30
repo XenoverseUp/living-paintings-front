@@ -32,7 +32,7 @@ export default function XRCard({
         />
         <span className="text-xs font-medium opacity-85">VR Compatible</span>
       </div>
-      <div className="group relative w-full grow cursor-pointer overflow-hidden rounded bg-white">
+      <div className="group bg-accent relative w-full grow cursor-pointer overflow-hidden rounded">
         <Link
           to={`/xr-playground/${id}?local=${local}&env=${indoor ? "indoor" : "outdoor"}`}
           viewTransition
