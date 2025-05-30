@@ -4,7 +4,7 @@ import { RectangleGoggles } from "lucide-react";
 
 export default function EmptyQueue() {
   return (
-    <div className="h-full px-8 pb-8">
+    <div className="h-full px-6 pb-8 md:px-8">
       <div className="flex h-full w-full flex-col items-center justify-center rounded-lg border border-dashed">
         <RectangleGoggles size={72} className="text-muted-foreground" />
 
