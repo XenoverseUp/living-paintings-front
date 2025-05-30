@@ -7,7 +7,7 @@ import { Outlet } from "react-router";
 export default function DashboardLayout() {
   return (
     <ThemeProvider>
-      <main className="text-foreground bg-background flex h-svh flex-col items-stretch md:flex-row">
+      <main className="text-foreground bg-background flex h-dvh flex-col items-stretch md:flex-row">
         <header className="relative flex h-16 shrink-0 items-center border-b px-4 md:hidden">
           <AppSidebar>
             <PanelRightClose size={20} className="text-muted-foreground" />
