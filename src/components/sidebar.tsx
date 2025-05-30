@@ -6,13 +6,18 @@ import { Separator } from "./ui/separator";
 import {
   GalleryHorizontal,
   Library,
+  Moon,
   RectangleGoggles,
+  Sun,
   Users,
 } from "lucide-react";
+import { useTheme } from "@/lib/hooks/useTheme";
 
 type SidebarProps = Partial<HTMLDivElement>;
 
 export function Sidebar({ className }: SidebarProps) {
+  const { setTheme, theme } = useTheme();
+
   return (
     <div className={cn(className, "border-r")}>
       <div className="flex h-full flex-col gap-y-6 pt-6 pb-4">
@@ -73,9 +78,18 @@ export function Sidebar({ className }: SidebarProps) {
             </Link>
           </div>
           <Separator className="mb-4" />
-          <p className="text-muted-foreground px-6 text-xs">
-            Living Paintings &copy; {new Date().getFullYear()}
-          </p>
+          <div className="flex items-center justify-between px-6">
+            <p className="text-muted-foreground text-xs">
+              Living Paintings &copy; {new Date().getFullYear()}
+            </p>
+
+            <button
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              className="cursor-pointer"
+            >
+              {theme === "light" ? <Sun size={20} /> : <Moon size={20} />}
+            </button>
+          </div>
         </div>
       </div>
     </div>

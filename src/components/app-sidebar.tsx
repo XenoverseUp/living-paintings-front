@@ -28,7 +28,7 @@ export default function AppSidebar({ children }: Props) {
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>{children}</SheetTrigger>
       <SheetContent side="left">
-        <Sidebar className="h-full border-none" />
+        <Sidebar className="bg-background h-full border-none" />
       </SheetContent>
     </Sheet>
   );
