@@ -9,7 +9,7 @@ export default function EmptyQueue() {
         <RectangleGoggles size={72} className="text-muted-foreground" />
 
         <h2 className="mt-4 text-lg font-semibold">No items processing</h2>
-        <p className="text-muted-foreground mt-2 mb-4 text-sm">
+        <p className="text-muted-foreground mt-2 mb-4 px-4 text-center text-sm">
           You have not created any VR experiences. Create one below.
         </p>
         <Link to="/create" className="block">
